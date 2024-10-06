@@ -67,5 +67,3 @@ class BlogSpider(scrapy.Spider):
                     jutsu_description=jutsu_description
                 )
 #run: scrapy runspider crawler/justu_crawler.py -o data/jutsus.jsonl
-
-        
