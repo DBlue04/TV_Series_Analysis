@@ -3,6 +3,15 @@ from transformers import pipeline
 from nltk import sent_tokenize
 import pandas as pd
 import numpy as np
+import nltk
+import os
+import sys
+import pathlib
+folder_path = pathlib.Path(__file__).parent.resolve()
+sys.path.append(os.path.join(folder_path,'../'))
+from utils import load_subtitles_data
+nltk.download('punkt')
+nltk.download('punkt_tab')#pre-trained tokenizer model 
 
 class ThemeClassifier():
     def __init__(self, theme_list):
@@ -47,8 +56,21 @@ class ThemeClassifier():
         themes = {key: np.mean(np.array(value)) for key, value in themes.items()}
         return themes
     
-    def get_theme(self, dataset_path):
+    def get_theme(self, dataset_path, save_path = None):
+
+        #Read save output if exists
+        if save_path is not None and os.path.exists(save_path):
+            df = df.read_csv(save_path)
+            return df
         
         #load dataset
-
+        df = load_subtitles_data(dataset_path)
+        df = df.head(2)
         #run inference
+        output_themes = df['script'].apply(self.get_themes_inference)
+
+        themes_df = pd.DataFrame(output_themes.tolist())
+        df[themes_df.columns] = themes_df
+
+        if save_path is not None:
+            df.to_csv(save_path, index=False)
