@@ -1,1 +1,1 @@
-from .data_loader import load_subtitles_data
+from .data_loader import load_subtitles_dataset

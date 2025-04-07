@@ -2,7 +2,7 @@ from glob import glob
 import pandas as pd
 
 
-def load_subtitles_data(dataset_path):
+def load_subtitles_dataset(dataset_path):
     subtitle_paths = glob(dataset_path+'/*.ass')
 
     scripts = []
