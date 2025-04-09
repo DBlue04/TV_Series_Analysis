@@ -1,4 +1,4 @@
 *.pyc
 *.ipynb_checkpoints
 .env
-*__pacache__
+*__pycache__
